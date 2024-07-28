@@ -18,6 +18,7 @@ import { router as reviewRoutes } from "./routes/reviewRoutes.js";
 import { router as bookingRoutes } from "./routes/bookingRoutes.js";
 import { router as viewRoutes } from "./routes/viewRoutes.js";
 import { router as webhooksRoutes } from "./routes/webhooksRoutes.js";
+import compression from 'compression';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -85,6 +86,8 @@ app.use(
         ]
     })
 );
+
+app.use(compression());
 
 // Test middleware
 app.use((req, res, next) => {

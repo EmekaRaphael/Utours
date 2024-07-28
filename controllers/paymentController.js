@@ -9,8 +9,6 @@ import AppError from "../utils/AppError.js";
 const handlePaymentSuccess = catchAsync(async (req, res, next) => {
     const event = req.body;
 
-    console.log("Received webhook event:", event);  // Log the event payload
-
     // Check if the event is a successful payment
     if(event.event === "charge.success") {
         const { reference, customer, amount } = event.data;
@@ -38,8 +36,6 @@ const handlePaymentSuccess = catchAsync(async (req, res, next) => {
             price: amount * 100 * exchangeRate, // Convert amount back to original price.
             reference
         });
-
-        console.log("New booking created:", newBooking);  // Log the newly created booking
 
         res.status(200).json({
             status: "success",

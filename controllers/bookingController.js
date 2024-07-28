@@ -35,7 +35,7 @@ const getCheckoutSession = catchAsync(async (req, res, next) => {
             status: "success",
             session
         });
-        console.log(session);
+
     } catch (error) {
         return next(new AppError("Failed to create checkout session", 500));
     }
