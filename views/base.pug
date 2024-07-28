@@ -1,0 +1,33 @@
+Doctype 
+html(lang='en')
+    head
+        block head
+            meta(charset='UTF-8')
+            meta(name='viewport' content='width=device-width, initial-scale=1.0')
+            meta(http-equiv='Content-Security-Policy' content="script-src 'self' 'https://api.mapbox.com'; style-src 'self' 'https://api.mapbox.com'; img-src 'self' data: 'https://api.mapbox.com'; connect-src 'self' 'https://api.mapbox.com';")
+            link(rel='stylesheet' href='/css/style.css')
+            link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+            link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+            link(href='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css' rel='stylesheet')
+            title Utours | #{title}
+
+
+    body
+        // HEADER
+        include _header
+
+        
+        // CONTENT
+        block content
+
+
+        // FOOTER
+        include _footer
+            script(src='/js/bundle.js')
+
+
+
+
+
+
+
