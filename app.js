@@ -22,6 +22,7 @@ import { router as webhooksRoutes } from "./routes/webhooksRoutes.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Start Express app
 const app = express();
 
 app.set("view engine", "pug");
