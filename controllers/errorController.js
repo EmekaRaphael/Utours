@@ -62,7 +62,7 @@ const sendErrorProd = (err, req, res) => {
             // b) Programming or other unknown error: don't leak error details
             // 1) Log error
             console.error('ERROR', err);
-            // 2) Send generic meesage 
+            // 2) Send generic message 
             return res.status(500).json({
                 status: 'Error',
                 message: 'Oops, Something went wrong.'
@@ -80,7 +80,7 @@ const sendErrorProd = (err, req, res) => {
             // b) Programming or other unknown error: don't leak error details
             // 1) Log error
             console.error('ERROR', err);
-            // 2) Send generic meesage
+            // 2) Send generic message
             return res.status(err.statusCode).render('error', {
                 title: "Something went wrong!",
                 msg: "Please try again later"
@@ -91,9 +91,9 @@ const globalErrorHandler = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500;
     err.status = err.status || 'error';
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV_DEV === 'development') {
         sendErrorDev(err, req, res);
-    } else if (process.env.NODE_ENV === 'production') {
+    } else if (process.env.NODE_ENV_PROD === 'production') {
         let error = { ...err }; // Merge error and errorResponse
         error.message = err.message;
         error.name = err.name;
@@ -106,6 +106,8 @@ const globalErrorHandler = (err, req, res, next) => {
 
         sendErrorProd(error, req, res);
     }
+
+    
 };
 
 export default globalErrorHandler;

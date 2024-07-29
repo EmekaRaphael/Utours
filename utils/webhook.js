@@ -1,5 +1,3 @@
-// import crypto from "crypto";
-// import AppError from "./AppError.js";
 import { configDotenv } from "dotenv";
 
 configDotenv();

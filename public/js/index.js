@@ -2,7 +2,7 @@ import "@babel/polyfill";
 import { displayMap } from "./mapbox";
 import { login, logout, signup } from "./login";
 import { updateSettings } from "./updateSettings";
-import { bookTour } from "./Payment";
+import { bookTour } from "./payment";
 
 // DOM ELEMENTS
 const mapbox = document.getElementById('map');
