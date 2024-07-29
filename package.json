@@ -5,9 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
-    "start:prod": "set NODE_ENV=production && node server.js",
+    "start": "nodemon server.js",
+    "dev": "nodemon server.js",
+    "start:prod": "set NODE_ENV=production && nodemon server.js",
     "debug": "ndb server.js",
     "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
     "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
@@ -46,6 +46,7 @@
     "xss-clean": "^0.1.4"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.6"
+    "@types/bcryptjs": "^2.4.6",
+    "nodemon": "^3.1.4"
   }
 }
