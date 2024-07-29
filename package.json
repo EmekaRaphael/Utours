@@ -5,13 +5,12 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
+    "start": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js && node server.js",
     "dev": "node server.js",
     "start:dev": "set NODE_ENV_DEV=development && node server.js",
     "start:prod": "set NODE_ENV_PROD=production && node server.js",
     "debug": "ndb server.js",
-    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
-    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
+    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
   },
   "keywords": [],
   "author": "WittyUnlimited",
