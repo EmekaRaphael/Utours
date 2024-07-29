@@ -19,7 +19,6 @@ export const bookTour = async (tourId) => {
         }
 
         const { authorization_url } = session.data;
-        console.log(session);
         if (authorization_url) {
             // 3) Redirect to Paystack authorization URL in new tab
             window.location.href = authorization_url;
