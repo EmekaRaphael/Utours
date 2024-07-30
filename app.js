@@ -8,7 +8,8 @@ import ExpressMongoSanitize from "express-mongo-sanitize";
 import xss from "xss-clean";
 import hpp from "hpp";
 import cookieParser from 'cookie-parser';
-
+import compression from 'compression';
+import cors from "cors";
 
 import AppError from "./utils/AppError.js";
 import globalErrorHandler from "./controllers/errorController.js";
@@ -18,7 +19,7 @@ import { router as reviewRoutes } from "./routes/reviewRoutes.js";
 import { router as bookingRoutes } from "./routes/bookingRoutes.js";
 import { router as viewRoutes } from "./routes/viewRoutes.js";
 import { router as webhooksRoutes } from "./routes/webhooksRoutes.js";
-import compression from 'compression';
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -32,6 +33,13 @@ app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 
 // 1) GLOBAL MIDDLEWARES
+// Implement CORS
+app.use(cors());
+// Access-Control-Allow-Origin *
+app.options("*", cors());
+// app.options("/api/v1/tours/:id", cors());
+
+
 // serving static files 
 app.use(express.static(path.join(__dirname, "public")));
 
