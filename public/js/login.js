@@ -25,7 +25,6 @@ export const signup = async (name, email, password, passwordConfirm, role) => {
             return showAlert('error', 'Please provide info on all required fields');
         }
 
-
     } catch (err) {
         showAlert('error', err.response.data.message);
     }

@@ -42,7 +42,6 @@ const getLoginForm = catchAsync(async (req, res) => {
 });
 
 const getSignupForm = catchAsync(async (req, res) => {
-
     res.status(200).render("signup", {
         title: "Sign up"
     });
