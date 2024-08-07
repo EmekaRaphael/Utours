@@ -4,7 +4,7 @@ html(lang='en')
         block head
             meta(charset='UTF-8')
             meta(name='viewport' content='width=device-width, initial-scale=1.0')
-            meta(http-equiv='Content-Security-Policy' content="script-src 'self' 'https://api.mapbox.com'; style-src 'self' 'https://api.mapbox.com'; img-src 'self' data: 'https://api.mapbox.com'; connect-src 'self' 'https://api.mapbox.com';")
+            meta(http-equiv="Content-Security-Policy" content="script-src 'self' 'https://api.mapbox.com'; style-src 'self' 'https://api.mapbox.com'; img-src 'self' data: 'https://api.mapbox.com'; connect-src 'self' https://api.mapbox.com https://events.mapbox.com ws://127.0.0.1:49735 ws://127.0.0.1:49741 https://api.stripe.com; frame-src 'self' https://js.stripe.com;")
             link(rel='stylesheet' href='/css/style.css')
             link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
             link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')

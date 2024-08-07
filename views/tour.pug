@@ -2,15 +2,17 @@ extends base
 include _reviewCard
 
 block append head
+    meta(http-equiv="Content-Security-Policy" content="script-src 'self' 'https://api.mapbox.com'; style-src 'self' 'https://api.mapbox.com'; img-src 'self' data: 'https://api.mapbox.com'; connect-src 'self' https://api.mapbox.com https://events.mapbox.com ws://127.0.0.1:49735 ws://127.0.0.1:49741 https://api.stripe.com; frame-src 'self' https://js.stripe.com;")
     script(src='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js')
     link(href='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css' rel='stylesheet')
-    script(src='https://js.paystack.co/v2/inline.js')
+    script(src='https://js.stripe.com/v3/')
+    //- script(src='https://js.paystack.co/v2/inline.js')
 
 mixin overviewBox(label, text, icon)
     .overview-box__detail
         svg.overview-box__icon
             use(xlink:href=`/img/icons.svg#icon-${icon}`)
-        span.overview-box__label= label
+        span.overview-box__label= label 
         span.overview-box__text= text
 
 

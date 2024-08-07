@@ -36,7 +36,7 @@ const createSendToken = (user, statusCode, req, res) => {
             user
         }
     });
-}
+};
 
 const signUp = catchAsync(async (req, res, next) => {
     const { name, email, password, passwordConfirm, role } = req.body;

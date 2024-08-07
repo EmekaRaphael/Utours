@@ -2,7 +2,7 @@ import "@babel/polyfill";
 import { displayMap } from "./mapbox";
 import { login, logout, signup } from "./login";
 import { updateSettings } from "./updateSettings";
-import { bookTour } from "./payment";
+import { bookTour } from "./stripe.js";
 
 // DOM ELEMENTS
 const mapbox = document.getElementById('map');
@@ -85,13 +85,5 @@ if(bookBtn)
     bookBtn.addEventListener("click", e => {
         e.target.textContent = "Processing...";
         const { tourId } = e.target.dataset;
-        bookTour(tourId)
-        .then( () => {
-            e.target.textContent = "BOOK TOUR NOW!";
-        })
-        .catch( () => {
-            console.error("Error booking tour:", err);
-            e.target.textContent = "BOOK TOUR NOW!";
-        });
-
+        bookTour(tourId);
     });

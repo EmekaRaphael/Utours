@@ -10,6 +10,7 @@ import hpp from "hpp";
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import cors from "cors";
+import favicon from "serve-favicon";
 
 import AppError from "./utils/AppError.js";
 import globalErrorHandler from "./controllers/errorController.js";
@@ -43,23 +44,27 @@ app.options("*", cors());
 // serving static files 
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
 // Set security HTTP headers
 app.use(helmet());
 app.use(helmet({
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "https://api.mapbox.com", "https://cdnjs.cloudflare.com", "https://js.paystack.co", "blob:"],
+        scriptSrc: ["'self'", "https://api.mapbox.com", "https://cdnjs.cloudflare.com", "https://js.stripe.com", "blob:"],
         styleSrc: ["'self'", "https://api.mapbox.com", "https://fonts.googleapis.com", "'unsafe-inline'"],
         fontSrc: ["'self'", "https://fonts.gstatic.com"],
-        imgSrc: ["'self'", "data:", "https://api.mapbox.com"],
-        connectSrc: ["'self'", "https://api.mapbox.com", "https://events.mapbox.com",  "https://api.paystack.co", "ws://127.0.0.1:49735" ],
+        imgSrc: ["'self'", "data:", "https://api.mapbox.com", "https://q.stripe.com"],
+        connectSrc: ["'self'", "https://api.mapbox.com", "https://events.mapbox.com", "ws://127.0.0.1:49735", "ws://127.0.0.1:49741", "https://api.stripe.com" ],
+        frameSrc: ["'self'", "https://js.stripe.com"],
+        formAction: ["'self'", "https://hooks.stripe.com"],
       },
     },
 }));
 
 // Development Logging
-if (process.env.NODE_ENV === "developement") {
+if (process.env.NODE_ENV_DEV === "developement") {
     app.use(morgan("dev"));
 }
 
@@ -102,7 +107,6 @@ app.use(compression());
 // Test middleware
 app.use((req, res, next) => {
     req.requestTime = new Date().toISOString();
-    // console.log(req.cookies);
     next();
 });
 
