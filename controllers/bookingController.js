@@ -35,7 +35,7 @@ const getCheckoutSession = catchAsync(async (req, res, next) => {
             }
         ],
         mode: "payment",
-        success_url: `${req.protocol}://${req.get("host")}/`,
+        success_url: `${req.protocol}://${req.get("host")}/?tour=${req.params.tourId}&user=${req.user.id}&price=${tour.price}`,
         cancel_url: `${req.protocol}://${req.get("host")}/tour/${tour.slug}`,
     });
 
@@ -46,7 +46,42 @@ const getCheckoutSession = catchAsync(async (req, res, next) => {
     });
 });
 
-// USING PAYSTACK PAYMENT GATEWAY
+const createBookingCheckout = catchAsync(async (req, res, next) => {
+    // this is only temporary, because it's unsecure: anyone can make bookings without paying.
+    const { tour, user, price } = req.query;
+
+    if (!tour && !user && !price) return next();
+    await Booking.create({ tour, user, price });
+
+    res.redirect(req.originalUrl.split('?')[0])
+});
+
+
+
+
+
+const getAllBookings = getAll(Booking);
+const createBooking = createOne(Booking);
+const getBooking = getOne(Booking);
+const updateBooking = updateOne(Booking);
+const deleteBooking = deleteOne(Booking);
+
+
+export { 
+    getCheckoutSession,
+    createBookingCheckout,
+    getAllBookings,
+    createBooking,
+    getBooking,
+    updateBooking,
+    deleteBooking
+};
+
+
+
+
+// USING PAYSTACK PAYMENT GATEWAY__________________________________________________________________________________________________________________________________________________
+
 // import { initializeTransaction } from "../utils/Paystack.mjs";
 // const getCheckoutSession = catchAsync(async (req, res, next) => {
 //     // 1) Get currently booked tour
@@ -81,18 +116,3 @@ const getCheckoutSession = catchAsync(async (req, res, next) => {
 //     }
 // });
 
-const getAllBookings = getAll(Booking);
-const createBooking = createOne(Booking);
-const getBooking = getOne(Booking);
-const updateBooking = updateOne(Booking);
-const deleteBooking = deleteOne(Booking);
-
-
-export { 
-    getCheckoutSession,
-    getAllBookings,
-    createBooking,
-    getBooking,
-    updateBooking,
-    deleteBooking
-};

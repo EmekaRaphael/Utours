@@ -44,6 +44,7 @@ app.options("*", cors());
 // serving static files 
 app.use(express.static(path.join(__dirname, "public")));
 
+// serving favicon
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 // Set security HTTP headers
