@@ -18,8 +18,8 @@ import { router as tourRoutes } from "./routes/tourRoutes.js";
 import { router as userRoutes } from "./routes/userRoutes.js";
 import { router as reviewRoutes } from "./routes/reviewRoutes.js";
 import { router as bookingRoutes } from "./routes/bookingRoutes.js";
+import { webhookCheckout } from './controllers/bookingController.js';
 import { router as viewRoutes } from "./routes/viewRoutes.js";
-import { router as webhooksRoutes } from "./routes/webhooksRoutes.js";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -77,6 +77,10 @@ const limiter = rateLimit({
 });
 app.use("/api", limiter);
 
+app.post("/webhook-checkout", 
+    express.raw({ type: "application/json" }),
+    webhookCheckout
+);
 
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: "10kb" }));
@@ -117,7 +121,7 @@ app.use("/api/v1/tours", tourRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/reviews", reviewRoutes);
 app.use("/api/v1/bookings", bookingRoutes);
-app.use("/api/v1/webhooks", webhooksRoutes);
+
 
 app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
