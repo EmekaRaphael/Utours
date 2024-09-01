@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url';
 import express from "express";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
-import helmet from "helmet";
+// import helmet from "helmet";
 import ExpressMongoSanitize from "express-mongo-sanitize";
 import xss from "xss-clean";
 import hpp from "hpp";
@@ -48,21 +48,21 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 // Set security HTTP headers
-app.use(helmet());
-app.use(helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "https://api.mapbox.com", "https://cdnjs.cloudflare.com", "https://js.stripe.com", "blob:"],
-        styleSrc: ["'self'", "https://api.mapbox.com", "https://fonts.googleapis.com", "'unsafe-inline'"],
-        fontSrc: ["'self'", "https://fonts.gstatic.com"],
-        imgSrc: ["'self'", "data:", "https://api.mapbox.com", "https://q.stripe.com"],
-        connectSrc: ["'self'", "https://api.mapbox.com", "https://events.mapbox.com", "ws://127.0.0.1:49735", "ws://127.0.0.1:49741", "https://api.stripe.com" ],
-        frameSrc: ["'self'", "https://js.stripe.com"],
-        formAction: ["'self'", "https://hooks.stripe.com"],
-      },
-    },
-}));
+// app.use(helmet());
+// app.use(helmet({
+//     contentSecurityPolicy: {
+//       directives: {
+//         defaultSrc: ["'self'"],
+//         scriptSrc: ["'self'", "https://api.mapbox.com", "https://cdnjs.cloudflare.com", "https://js.stripe.com", "blob:"],
+//         styleSrc: ["'self'", "https://api.mapbox.com", "https://fonts.googleapis.com", "'unsafe-inline'"],
+//         fontSrc: ["'self'", "https://fonts.gstatic.com"],
+//         imgSrc: ["'self'", "data:", "https://api.mapbox.com", "https://q.stripe.com"],
+//         connectSrc: ["'self'", "https://api.mapbox.com", "https://events.mapbox.com", "ws://127.0.0.1:49735", "ws://127.0.0.1:49741", "https://api.stripe.com" ],
+//         frameSrc: ["'self'", "https://js.stripe.com"],
+//         formAction: ["'self'", "https://hooks.stripe.com"],
+//       },
+//     },
+// }));
 
 // Development Logging
 if (process.env.NODE_ENV_DEV === "developement") {
