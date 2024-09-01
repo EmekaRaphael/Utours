@@ -1,8 +1,8 @@
 {
   "name": "Utours",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "description": "A Web App for tourism",
+  "main": "webApp.js",
   "type": "module",
   "scripts": {
     "start": "node server.js",
@@ -10,13 +10,12 @@
     "start:dev": "set NODE_ENV_DEV=development && nodemon server.js",
     "start:prod": "set NODE_ENV_PROD=production && node server.js",
     "debug": "ndb server.js",
-    "build:js": "parcel build ./public/js/index.js --dist-dir ./public/js"
+    "build:js": "parcel build ./public/js/index.js --dist-dir ./public/js --out-file bundle.js"
   },
   "keywords": [],
   "author": "WittyUnlimited",
   "license": "ISC",
   "dependencies": {
-    "@babel/polyfill": "^7.12.1",
     "@stripe/stripe-js": "^4.1.0",
     "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",

@@ -1,4 +1,5 @@
-import "@babel/polyfill";
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import { displayMap } from "./mapbox";
 import { login, logout, signup } from "./login";
 import { updateSettings } from "./updateSettings";
