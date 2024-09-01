@@ -10,8 +10,7 @@
     "start:dev": "set NODE_ENV_DEV=development && nodemon server.js",
     "start:prod": "set NODE_ENV_PROD=production && node server.js",
     "debug": "ndb server.js",
-    "watch:js": "parcel watch ./public/js/index.js --dist-dir ./public/js --out-file bundle.js",
-    "build:js": "parcel build ./public/js/index.js --dist-dir ./public/js --out-file bundle.js"
+    "build:js": "parcel build ./public/js/index.js --dist-dir ./public/js"
   },
   "keywords": [],
   "author": "WittyUnlimited",
@@ -51,7 +50,7 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "cross-env": "^7.0.3",
-    "parcel": "^2.0.0"
+    "parcel": "^2.12.0"
   },
   "engines": {
     "node": "^18.20.4"
