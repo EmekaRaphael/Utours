@@ -5,7 +5,7 @@ import { Booking } from "../models/bookingModel.js";
 import { catchAsync } from "../utils/catchAsync.js";
 import { createOne, deleteOne, getAll, getOne, updateOne } from "./handlerFactory.js";
 import { configDotenv } from "dotenv";
-import { response } from "express";
+
 
 
 configDotenv();
@@ -13,7 +13,7 @@ configDotenv();
 // USING STRIPE PAYMENT GATEWAY
 const stripe = new Stripe(process.env.STRIPE_SK);
 
-const getCheckoutSession = catchAsync(async (req, res, next) => {
+export const getCheckoutSession = catchAsync(async (req, res, next) => {
     // 1) Get currently booked tour
     const tour = await Tour.findById(req.params.tourId);
 
@@ -49,24 +49,15 @@ const getCheckoutSession = catchAsync(async (req, res, next) => {
     });
 });
 
-// const createBookingCheckout = catchAsync(async (req, res, next) => {
-//     // this is only temporary, because it's unsecure: anyone can make bookings without paying.
-//     const { tour, user, price } = req.query;
 
-//     if (!tour && !user && !price) return next();
-//     await Booking.create({ tour, user, price });
-
-//     res.redirect(req.originalUrl.split('?')[0])
-// });
-
-const createBookingCheckout = async session => {
+export const createBookingCheckout = async session => {
     const tour = session.client_reference_id;
     const user = (await User.findOne({ email: session.customer_email })).id;
     const price = session.line_items[0].unit_amount / 100;
     await Booking.create({ tour, user, price });
-}
+};
 
-const webhookCheckout = (req, res, next) => {
+export const webhookCheckout = (req, res, next) => {
     const signature = req.headers['stripe-signature'];
 
     let event;
@@ -80,44 +71,22 @@ const webhookCheckout = (req, res, next) => {
         return res.status(400).send(`Webhook error: ${err.message}`);
     }
 
-    // if(event.type === "checkout.session.completed")
-    //     createBookingCheckout(event.data.object);
     // Handle the event
-    switch (event.type) {
-        case 'checkout-session-completed':
-            const checkoutSessionCompleted = event.data.object;
-            // Then define and call a function to handle the event checkout.session.completed
-            break;
-            // ... handle other event types
-            default:
-                console.log(`Unhandled event type ${event.type}`);
-    }
+    if(event.type === 'checkout.session.completed')
+        createBookingCheckout(event.data.object);
+
 
     // Return a 200 response to acknowledge receipt of the event
-    response.send();
-
-    // res.status(200).json({ received: true });
-
+    res.status(200).json({ received: true });
 
 };
 
-const getAllBookings = getAll(Booking);
-const createBooking = createOne(Booking);
-const getBooking = getOne(Booking);
-const updateBooking = updateOne(Booking);
-const deleteBooking = deleteOne(Booking);
+export const getAllBookings = getAll(Booking);
+export const createBooking = createOne(Booking);
+export const getBooking = getOne(Booking);
+export const updateBooking = updateOne(Booking);
+export const deleteBooking = deleteOne(Booking);
 
-
-export { 
-    getCheckoutSession,
-    createBookingCheckout,
-    getAllBookings,
-    createBooking,
-    getBooking,
-    updateBooking,
-    deleteBooking,
-    webhookCheckout
-};
 
 
 
