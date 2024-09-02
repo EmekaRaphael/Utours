@@ -5,6 +5,7 @@ import { Booking } from "../models/bookingModel.js";
 import { catchAsync } from "../utils/catchAsync.js";
 import { createOne, deleteOne, getAll, getOne, updateOne } from "./handlerFactory.js";
 import { configDotenv } from "dotenv";
+import { response } from "express";
 
 
 configDotenv();
@@ -79,10 +80,24 @@ const webhookCheckout = (req, res, next) => {
         return res.status(400).send(`Webhook error: ${err.message}`);
     }
 
-    if(event.type === "checkout.session.completed")
-        createBookingCheckout(event.data.object);
+    // if(event.type === "checkout.session.completed")
+    //     createBookingCheckout(event.data.object);
+    // Handle the event
+    switch (event.type) {
+        case 'checkout-session-completed':
+            const checkoutSessionCompleted = event.data.object;
+            // Then define and call a function to handle the event checkout.session.completed
+            break;
+            // ... handle other event types
+            default:
+                console.log(`Unhandled event type ${event.type}`);
+    }
 
-    res.status(200).json({ received: true });
+    // Return a 200 response to acknowledge receipt of the event
+    response.send();
+
+    // res.status(200).json({ received: true });
+
 
 };
 
