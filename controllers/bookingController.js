@@ -43,24 +43,30 @@ export const getCheckoutSession = catchAsync(async (req, res, next) => {
         success_url: `${req.protocol}://${req.get("host")}/my-tours`,
         cancel_url: `${req.protocol}://${req.get("host")}/tour/${tour.slug}`
     });
-
+    // console.log(session);
     // 3) create session as response
     res.status(200).json({
         status: "success",
         session,
     });
+    
 
 });
 
 
 export const createBookingCheckout = async session => {
-    const tour = session.client_reference_id;
-    const user = (await User.findOne({ email: session.customer_email })).id;
-    const price = session.line_items[0].unit_amount / 100;
-    await Booking.create({ tour, user, price });
+    try {
+        const tour = session.client_reference_id;
+        const user = (await User.findOne({ email: session.customer_email })).id;
+
+        const tourDetails = await Tour.findById(tour);
+        const price = tourDetails.price;
+
+        await Booking.create({ tour, user, price });
+    } catch (error) {
+        console.error('Error in createBookingCheckout:', error.message);
+    }
 };
-
-
 
 
 export const webhookCheckout = (req, res, next) => {
