@@ -21,17 +21,34 @@ export const bookTour = async tourId => {
             throw new Error('Failed to fetch session');
         }
 
-        const session = await response.json();
-        
+        const sessionData = await response.json();
+
+        if (!sessionData || !sessionData.session || !sessionData.session.id) {
+            throw new Error('Invalid session data received');
+        }
+
+        // Log the sessionData to see its structure
+        console.log("Session Data:", sessionData);
+
+        // 2) Check if sessionData is correctly structured
+        if (!sessionData || !sessionData.session || !sessionData.session.id) {
+            throw new Error('Invalid session data received');
+        }
+
+        // 3) Create checkout form + charge credit card
+        await stripe.redirectToCheckout({
+            sessionId: sessionData.session.id,
+        });
+
         // const session = await axios(
         //     // `http://localhost:8000/api/v1/bookings/checkout-session/${tourId}`,
         //     `${req.protocol}://${req.get("host")}/api/v1/bookings/checkout-session/${tourId}`,
         // );
                 
-        // 2) Create checkout form + charge credit card
-        await stripe.redirectToCheckout({
-            sessionId: session.data.session.id
-        });
+        // // 2) Create checkout form + charge credit card
+        // await stripe.redirectToCheckout({
+        //     sessionId: sessionData.session.id
+        // });
 
     } catch (err) {
         showAlert("error", err.response ? err.response.data.message : err.message);
