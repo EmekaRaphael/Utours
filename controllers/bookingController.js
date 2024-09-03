@@ -18,9 +18,6 @@ export const getCheckoutSession = catchAsync(async (req, res, next) => {
     // 1) Get currently booked tour
     const tour = await Tour.findById(req.params.tourId);
 
-    if (!tour) {
-        return next(new AppError('No tour found with that ID', 404));
-    }
 
     // 2) create checkout session
     const session = await stripe.checkout.sessions.create({
@@ -90,9 +87,6 @@ export const webhookCheckout = (req, res, next) => {
             default:
                 console.log(`Unhandled event type ${event.type}`);
     }
-    // if(event.type === 'checkout.session.completed')
-    //     createBookingCheckout(event.data.object);
-
 
     // Return a 200 response to acknowledge receipt of the event
     res.status(200).json({ received: true });
