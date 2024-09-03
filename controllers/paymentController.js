@@ -30,19 +30,19 @@
 //         }
 
 //         // Create a new booking
-//         const newBooking = await Booking.create({
-//             tour: tourId,
-//             user: user._id,
-//             price: amount * 100 * exchangeRate, // Convert amount back to original price.
-//             reference
-//         });
+//         // const newBooking = await Booking.create({
+//         //     tour: tourId,
+//         //     user: user._id,
+//         //     price: amount * 100 * exchangeRate, // Convert amount back to original price.
+//         //     reference
+//         // });
 
-//         res.status(200).json({
-//             status: "success",
-//             data: { 
-//                 booking: newBooking
-//             }
-//         });
+//         // res.status(200).json({
+//         //     status: "success",
+//         //     data: { 
+//         //         booking: newBooking
+//         //     }
+//         // });
         
 //     } else {
 //         res.status(400).json({ 

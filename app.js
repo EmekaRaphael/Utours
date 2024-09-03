@@ -81,6 +81,7 @@ app.post("/webhook-checkout",
     express.raw({ type: "application/json" }),
     webhookCheckout
 );
+
 app.listen(4242, () => console.log('Running on port 4242'));
 
 // Body parser, reading data from body into req.body

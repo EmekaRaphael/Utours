@@ -3,7 +3,7 @@ import axios from "axios";
 import { showAlert } from './alert';
 
 async function initializeStripe() {
-    const stripe = await loadStripe('pk_test_51PkqKqFbOlLQvZqUeV7zjhXhJ3cAxwcq9TPL5mrx6ZZ2Kzr8YHU9OHfyUT3Brujde851BfM1iKY0BCjPEfl7f9yg00ASq22Mq3');
+    const stripe = await loadStripe(process.env.STRIPE_PK);
     return stripe;
 }
 
@@ -14,7 +14,7 @@ export const bookTour = async tourId => {
 
         // 1) Get checkout session from API
         const session = await axios(
-            `http://127.0.0.1:3000/api/v1/bookings/checkout-session/${tourId}`
+            `http://127.0.0.1:8000/api/v1/bookings/checkout-session/${tourId}`
         );
                 
         // 2) Create checkout form + charge credit card

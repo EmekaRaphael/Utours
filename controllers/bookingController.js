@@ -5,6 +5,7 @@ import { Booking } from "../models/bookingModel.js";
 import { catchAsync } from "../utils/catchAsync.js";
 import { createOne, deleteOne, getAll, getOne, updateOne } from "./handlerFactory.js";
 import { configDotenv } from "dotenv";
+import { response } from "express";
 
 
 
@@ -39,7 +40,7 @@ export const getCheckoutSession = catchAsync(async (req, res, next) => {
         mode: "payment",
         // success_url: `${req.protocol}://${req.get("host")}/?tour=${req.params.tourId}&user=${req.user.id}&price=${tour.price}`,
         success_url: `${req.protocol}://${req.get("host")}/my-tours`,
-        cancel_url: `${req.protocol}://${req.get("host")}/tour/${tour.slug}`,
+        cancel_url: `${req.protocol}://${req.get("host")}/tour/${tour.slug}`
     });
 
     // 3) create session as response
@@ -47,6 +48,7 @@ export const getCheckoutSession = catchAsync(async (req, res, next) => {
         status: "success",
         session
     });
+
 });
 
 
@@ -56,6 +58,9 @@ export const createBookingCheckout = async session => {
     const price = session.line_items[0].price_data.unit_amount / 100;
     await Booking.create({ tour, user, price });
 };
+
+
+
 
 export const webhookCheckout = (req, res, next) => {
     const signature = req.headers['stripe-signature'];
@@ -72,14 +77,24 @@ export const webhookCheckout = (req, res, next) => {
     }
 
     // Handle the event
-    if(event.type === 'checkout.session.completed')
-        createBookingCheckout(event.data.object);
+    switch (event.type) {
+        case 'checkout.session.completed':
+            const checkoutSessionCompleted = event.data.object;
+        // Then define and call a function to handle the event checkout.session.completed
+            createBookingCheckout(checkoutSessionCompleted);
+            break;
+            default:
+                console.log(`Unhandled event type ${event.type}`);
+    }
+    // if(event.type === 'checkout.session.completed')
+    //     createBookingCheckout(event.data.object);
 
 
     // Return a 200 response to acknowledge receipt of the event
     res.status(200).json({ received: true });
 
 };
+
 
 export const getAllBookings = getAll(Booking);
 export const createBooking = createOne(Booking);
