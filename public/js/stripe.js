@@ -1,5 +1,4 @@
 import { loadStripe } from "@stripe/stripe-js";
-// import axios from "axios";
 import { showAlert } from './alert';
 
 async function initializeStripe() {
@@ -39,16 +38,6 @@ export const bookTour = async tourId => {
         await stripe.redirectToCheckout({
             sessionId: sessionData.session.id,
         });
-
-        // const session = await axios(
-        //     // `http://localhost:8000/api/v1/bookings/checkout-session/${tourId}`,
-        //     `${req.protocol}://${req.get("host")}/api/v1/bookings/checkout-session/${tourId}`,
-        // );
-                
-        // // 2) Create checkout form + charge credit card
-        // await stripe.redirectToCheckout({
-        //     sessionId: sessionData.session.id
-        // });
 
     } catch (err) {
         showAlert("error", err.response ? err.response.data.message : err.message);

@@ -18,6 +18,10 @@ export const getCheckoutSession = catchAsync(async (req, res, next) => {
     // 1) Get currently booked tour
     const tour = await Tour.findById(req.params.tourId);
 
+    if (!tour) {
+        return next(new AppError('No tour found with that ID', 404));
+    }
+
     // 2) create checkout session
     const session = await stripe.checkout.sessions.create({
         customer_email: req.user.email,
