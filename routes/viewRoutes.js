@@ -6,12 +6,15 @@ import {
     getSignupForm, 
     getAccount,
     getMyTours, 
-    updateUserData 
+    updateUserData, 
+    alerts
 } from "../controllers/viewsController.js";
 import { isLoggedIn, protect } from "../controllers/authController.js";
 
 
 const router = express.Router();
+
+router.use(alerts)
 
 
 // ROUTES
