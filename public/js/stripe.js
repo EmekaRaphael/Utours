@@ -1,5 +1,5 @@
 import { loadStripe } from "@stripe/stripe-js";
-import axios from "axios";
+// import axios from "axios";
 import { showAlert } from './alert';
 
 async function initializeStripe() {
@@ -13,9 +13,20 @@ export const bookTour = async tourId => {
         const stripe = await initializeStripe();
 
         // 1) Get checkout session from API
-        const session = await axios(
-            `http://localhost:8000/api/v1/bookings/checkout-session/${tourId}`
+        const response = await fetch(
+            `${window.location.protocol}//${window.location.host}/api/v1/bookings/checkout-session/${tourId}`
         );
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch session');
+        }
+
+        const session = await response.json();
+        
+        // const session = await axios(
+        //     // `http://localhost:8000/api/v1/bookings/checkout-session/${tourId}`,
+        //     `${req.protocol}://${req.get("host")}/api/v1/bookings/checkout-session/${tourId}`,
+        // );
                 
         // 2) Create checkout form + charge credit card
         await stripe.redirectToCheckout({
