@@ -57,7 +57,7 @@ app.use(helmet({
         styleSrc: ["'self'", "https://api.mapbox.com", "https://fonts.googleapis.com", "'unsafe-inline'"],
         fontSrc: ["'self'", "https://fonts.gstatic.com"],
         imgSrc: ["'self'", "data:", "https://api.mapbox.com", "https://q.stripe.com"],
-        connectSrc: ["'self'", "https://api.mapbox.com", "https://events.mapbox.com", "ws://127.0.0.1:49735", "ws://127.0.0.1:49741", "https://api.stripe.com", "https://r.stripe.com", "http://localhost:8000"],
+        connectSrc: ["'self'", "https://api.mapbox.com", "https://events.mapbox.com", "ws://127.0.0.1:49735", "ws://127.0.0.1:49741", "https://api.stripe.com", "http://localhost:8000"],
         frameSrc: ["'self'", "https://js.stripe.com"],
         formAction: ["'self'", "https://hooks.stripe.com"],
       },
